@@ -20,4 +20,26 @@ socket.on('disconnect',function () {
 }); */
 socket.on('newMessage',function (message) {
     console.log('newMessage',message);
+    var li = $('<li></li>');
+    li.text('from:' + message.from + ' : ' + message.text);
+    $('#messages').append(li);
+});
+
+
+socket.emit('createMessage', {
+    from: 'Frank',
+    text: 'hello ,new world'
+},function (data) {
+    console.log('Got it: ',data);
+});
+
+$('#message-form').on('submit',function(e) {
+    e.preventDefault();
+
+    socket.emit('createMessage',{
+        from: 'User',
+        text: $('[name=message]').val()
+    },function() {
+
+    });
 });
