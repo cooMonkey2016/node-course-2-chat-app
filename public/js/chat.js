@@ -36,8 +36,18 @@ socket.on('connect', function () {
         text: 'Yup , that works for me'
     }); */
 });
+
 socket.on('disconnect',function () {
     console.log('Disconnect from server!');
+});
+
+socket.on('updateUserList', function (users) {
+    // console.log('Users List', users);
+    var ol = $('<ol></ol>');
+    users.forEach(function (user) {
+        ol.append($('<li></li>').text(user));
+    });
+    $('#users').html(ol);
 });
 
 /* socket.on('newEmail', function (email) {
