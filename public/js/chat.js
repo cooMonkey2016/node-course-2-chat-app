@@ -15,6 +15,16 @@ function scrollToBottom () {
 };
 
 socket.on('connect', function () {
+    var params = $.deparam(window.location.search);
+
+    socket.emit('join',params,function (err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            console.log('No Error!');
+        };
+    });
     console.log('Connected to server!');
 
     /* socket.emit('createEmail',{
@@ -51,12 +61,12 @@ socket.on('newMessage',function (message) {
 });
 
 
-socket.emit('createMessage', {
+/* socket.emit('createMessage', {
     from: 'Frank',
     text: 'hello ,new world'
 },function (data) {
     console.log('Got it: ',data);
-});
+}); */
 
 socket.on('newLocationMessage',function(message) {
     var formattedTime = moment(message.createdAt).format('h:mm a');
